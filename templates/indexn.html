@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>DJA CRM Application</title>
+</head>
+<body>
+    <div class="parent-container">
+        <div class="nav-container">
+            <a href="#" ><img src="{% static 'images/logo-light.png' %}" alt="Brand Logo" class="logo"></a>
+           
+            <div class="nav_links" id="navLinks">
+                <span class="iconify" data-icon="ep:close-bold" onclick="hideMenu()"></span>
+                <ul>
+                   {% comment %}<li><a href="#">Home</a></li>
+			{% if perms.project.can_add_subtask %}
+                    <li><a href="{% url 'consultant_task' %}">Task</a></li>
+                    {% endif %}
+			{% if perms.project.can_add_project %}
+                    <li><a href="{% url 'project_board' %}">Project page</a></li>
+            {% endif %}{% endcomment %}
+            {% if perms.training.can_view_trainers %}
+                    <li><a href="{% url 'trainers-list' %}">Trainers</a></li>
+			{% endif %}
+			
+			{% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}"class="nav-button">Logout</a></li>
+			{% else %}
+            <li><a href="{% url 'login' %}"class="nav-button">Login</a></li>
+            {% endif %}
+                </ul>
+            </div>
+
+            <span class="iconify" data-icon="eva:menu-fill" onclick="showMenu()"></span>
+
+            
+        </div>
+
+        <div class="header-container">
+            <div class="header-content">
+                <h1>Work at the speed of thought</h1>
+
+                <p>"Individual plays the game, but teams beat the odds".</p>
+
+                    
+
+
+            </div>
+
+            <div class="dashboard-image">
+                <img src="{% static 'images/Dashboard.png' %}" alt="Dashboard Image" class="dashboard-img">
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <footer>
+        <p id="calender">&copy; Digital Jewels Limited<span id="copyright">
+            <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+        </span></p>
+    </footer>
+ <script>
+    let date = new Date().getfullyear;
+    function calender(){
+        return date 
+    }
+    //let calender = document.getElementById('calender').value;
+
+ </script> 
+
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <script src="../static/js/index.js"></script>
+</body>
+</html>

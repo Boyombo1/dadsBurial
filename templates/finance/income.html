@@ -1,0 +1,250 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<style>
+body {
+    background: #222D32;
+    font-family: 'Roboto', sans-serif;
+}
+</style>
+{% block content %}
+ <!-- Body: Body -->
+<div class="main px-lg-4 px-md-4 ">
+    <h5 class="text-center text-info">welcome {{request.user}}</h5>
+<div class="body d-flex py-0">
+    <div class="container-xxl">
+        <div class="h-25 row g-3 mb-3 row-deck">
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card " style="height:5rem;">
+                    <div class="card-body bg-lightblue">
+                        <div class="d-flex align-items-center">
+                            
+                            <div class="flex-fill ms-0">
+                                <div class=""><i class="fa fa-briefcase" aria-hidden="true"></i>
+                                    <b> Income(₦)</b></div>
+                                    <h5 class="mb-0 text-center">{{income_sum}}</h5>
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card " style="height:5rem;">
+                    <div class="card-body bg-danger">
+                        <div class="d-flex align-items-center">
+                            
+                                <div class="flex-fill ms-0">
+                                    <div class=""><i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                        <b>Expence(₦)</b></div>
+                                    <h5 class="mb-0 text-center">{{expense}}</h5>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card " style="height:5rem;">
+                    <div class="card-body bg-lightgreen">
+                        <div class="d-flex align-items-center">
+                            
+                                <div class="flex-fill ms-0">
+                                    <div class="text-center"><i class="fa fa-times" aria-hidden="true"></i>
+                                        <b>Balance(₦)</b></div>
+                                    <h5 class="mb-0 text-center">{{balance}}</h5>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        <!--<div class="row g-3 mb-3 row-deck">
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card " style="height:5rem;">
+                    <div class="card-body bg-lightblue">
+                        <div class="d-flex align-items-center">
+                            
+                            <div class="flex-fill ms-2">
+                                <div class="text-center"><i class="fa fa-briefcase" aria-hidden="true"></i><b>Tasks</b></div>
+                                    <h5 class="mb-0 text-center">{{tasks.count}}</h5>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                    <div class="card ">
+                        <div class="card-body bg-danger" style="height:5rem;">
+                            <div class="d-flex align-items-center">
+                                
+                                    <div class="flex-fill ms-2">
+                                        <div class=""><i class="fa fa-hourglass-start" aria-hidden="true"></i><b>Not_Started</b></div>
+                                        <h5 class="mb-0 text-center">{{not_started}}</h5>
+                                    </div>
+                                    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                    <div class="card ">
+                        <div class="card-body bg-lightgreen" style="height:5rem;">
+                            <div class="d-flex align-items-center">
+                                
+                                    <div class="flex-fill ms-2">
+                                        <div class="text-center"><i class="fa fa-times" aria-hidden="true"></i><b>Closed</b></div>
+                                        <h5 class="mb-0 text-center">{{closed}}</h5>
+                                    </div>
+                                    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card ">
+                    <div class="card-body bg-success" style="height:5rem;">
+                        <div class="d-flex align-items-center">
+                           
+                                <div class="flex-fill ms-2">
+                                    <div class=""><i class="fa fa-check-square" aria-hidden="true"></i><b>Completed</b></div>
+                                    <h5 class="mb-0 text-center">{{completed_t}}</h5>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card " style="height:5rem;">
+                    <div class="card-body bg-warning">
+                        <div class="d-flex align-items-center">
+                            
+                                <div class="flex-fill ms-2">
+                                    <div class=""><i class="fa fa-pause" aria-hidden="true"></i><b>On-Hold</b></div>
+                                    <h5 class="mb-0 text-center">{{pending_t}}</h5>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
+                <div class="card "style="height:5rem;">
+                    <div class="card-body bg-info">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar lg  rounded-1 no-thumbnail bg-lightgreen color-defult"><i class="bi bi-clipboard-data fs-4"></i></div>
+                                <div class="flex-fill ms-2">
+                                    <div class=""><b>Active</b></div>
+                                    <h5 class="mb-0 text-center">{{progress_t}}</h5>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        Row End -->
+            
+        <!-- Row End -->
+           
+            <div class="row g-3 mb-3 row-deck">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                            <div class="h-5 card-header py-1 d-flex justify-content-between align-items-center">
+                                <div class="info-header">
+                                    <h6 class="mb-0 fw-bold ">Income Information</h6>
+                                </div>
+                                    
+                                <div class='float-right'>
+                                    {% comment %}<span><a href="{% url 'task_list' %}" class="btn-info ">Task page</a></span>
+                                    {% if perms.project.can_add_project %}
+                                    <span><button><a href="{% url 'create_project' %}" class="btn-info btn-sm float-right">CreateProject</a></button></span>
+                                    {% endif %}
+                                    {% if perms.project.can_create_task %}
+                                    <span><button><a href="{% url 'create_task' %}" class="btn-warning btn-sm float-right">Create Task</a></button></span>
+                                    {% endif %}
+                                    {% endcomment %}
+                                </div>    
+                                </div>
+                                <!--<div class="container col-lg-12">
+                                    <form method="GET" class="form-inline">
+                                    
+                                    <div class="form-group col">{{myfilter.form|crispy}}</div>
+                                
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                    <button id= "hide_resources" class="btn btn-primary" type="submit">hide</button>
+                                </form>
+                                </div>-->
+                                <div class="card-body" style="overflow: scroll">
+                                <table  class="table table-bordered table-striped table-hover align-middle mb-0 projects" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                           <th>Name</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                           </tr> 
+                                            
+                                        </thead
+                                            >
+                                    <tbody>
+                                            
+                                    
+
+                                        {% for income in income %}
+            
+                                        <tr id="exams" >
+                                            {% comment %}<td><a href="{% url 'project_detail' project.id %}">{{project.client}}</a></td>
+                                            <td class='resources'>
+                                                {% for unit in project.unit.all %}
+                                                <a href="#">{{unit}}</a>
+                                                {% endfor %}
+                                            </td>{% endcomment %}
+                                            <td>{{income.owner}}</td>
+                                            <td>{{income.amount}}</td>
+                                            <td>{{income.date}}</td>
+                                            
+                                            {% comment %}<td><a href="{% url 'edit-exam' exam.id %}" class= 'btn btn-success'>Edit</a></td>
+                                             {% for data in company_data %}
+                                                {% if data.training.id == training.id %}
+                                                    {% for company_count in data.company_counts %}
+                                            <td>{{ company_count.company.name }}: {{ company_count.count }}</td>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %} {% endcomment %}
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                    </div>
+                </div>
+            </div><!-- Row End -->
+        </div>             
+    </div>
+</div>
+<script>
+    
+   
+       
+       /*$("#projects").each(function(){
+            var status = $("#status");
+            //var projects = $("#projects");
+            if(status.html() == "pending"){
+                $("#projects").addClass('table-danger');
+   
+            }if(status.html() == "progress"){
+                $("#projects").addClass('table-info');
+
+            }if(status.text() == "completed"){
+                $("#projects").addClass('table-success')
+       }})})*/
+</script>
+
+{% endblock %}
