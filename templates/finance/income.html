@@ -161,7 +161,13 @@ body {
                                 <div class="info-header">
                                     <h6 class="mb-0 fw-bold ">Income Information</h6>
                                 </div>
-                                    
+                                <div class="d-flex justify-content-between align-items-center" style="margin: 20px; overflow: hidden;">
+                                    <form>
+                                      <label class="me-2" for="search">Search:</label>
+                                      <input class="me-2" type="search" value="{{ search_query }}" placeholder="Search" aria-label="Search" name="search_query">
+                                      <input class="btn btn-outline-success" type="submit" value="Submit">
+                                    </form>
+                                  </div> 
                                 <div class='float-right'>
                                     {% comment %}<span><a href="{% url 'task_list' %}" class="btn-info ">Task page</a></span>
                                     {% if perms.project.can_add_project %}
@@ -197,7 +203,7 @@ body {
                                             
                                     
 
-                                        {% for income in income %}
+                                        {% for income in income_s %}
             
                                         <tr id="exams" >
                                             {% comment %}<td><a href="{% url 'project_detail' project.id %}">{{project.client}}</a></td>
@@ -209,7 +215,10 @@ body {
                                             <td>{{income.owner}}</td>
                                             <td>{{income.amount}}</td>
                                             <td>{{income.date}}</td>
-                                            
+                                            {% if perms.finance.can_add_income %}
+                                            <td style="background:green"><a href="{% url 'edit-income' income.id %}"><b>Edit</b></a></td>
+                                            <td style="background:red"><a href="{% url 'delete-income' income.id %}"><b>Delete</b></a></td>
+                                            {% endif %}
                                             {% comment %}<td><a href="{% url 'edit-exam' exam.id %}" class= 'btn btn-success'>Edit</a></td>
                                              {% for data in company_data %}
                                                 {% if data.training.id == training.id %}
