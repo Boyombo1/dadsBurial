@@ -252,6 +252,10 @@ body {
                                             <td>{{expense.title}}</td>
                                             <td>{{expense.amount}}</td>
                                             <td>{{expense.date}}</td>
+                                            {% if perms.finance.can_add_expense %}
+                                            <td style="background:green" class="text-center"><a href="{% url 'edit-expense' expense.id %}"><b>Edit</b></a></td>
+                                            <td style="background:red"><a href="{% url 'delete-expense' expense.id %}"><b>Delete</b></a></td>
+                                            {% endif %}
                                             {% endfor %}
                                     </tbody>
                                 </table>

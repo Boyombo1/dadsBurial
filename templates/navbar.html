@@ -8,12 +8,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-                {% if user.is_authenticated %}
+                
                 <a href="{% url 'allincome' %}" class="nav-item nav-link active">View Income</a>
                 <a href="{% url 'allexpense' %}" class="nav-item nav-link">View Expense</a>
                 <a href="{% url 'addincome' %}" class="nav-item nav-link">Add Income</a>
                 <a href="{% url 'addexpense' %}" class="nav-item nav-link " tabindex="-1">Add Expense</a>
-                {% endif %}
+                
             </div>
             <div class="navbar-nav ms-auto">
                 <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>

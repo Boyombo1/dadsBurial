@@ -43,10 +43,13 @@ def edit_income(request, id):
         form = addIncomeForm()
     return render(request, 'finance/income_add.html', {'form':form, "income":income})
 
+@login_required(login_url='login')
 def delete_income(request, id):
     income = get_object_or_404(Income, pk=id)
     income.delete()
     return redirect('allincome')
+
+
 
 @login_required(login_url='login')
 @permission_required("finance.can_add_expense", raise_exception=True)
@@ -61,6 +64,26 @@ def expence_add(request):
     else:
         form = addExpenceForm()
     return render(request, 'finance/expence_add.html', {'form':form})
+
+@login_required(login_url='login')
+def edit_expense(request, id):
+    expense = get_object_or_404(Expence, id=id)
+    #income = Income.objects.get(id=id)
+    if request.method == "POST":
+        form = addExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            #Income.get_total_amount
+        return redirect('allexpense')
+    else:
+        form = addExpenseForm()
+    return render(request, 'finance/expence_add.html', {'form':form, "expense":expense})
+    
+@login_required(login_url='login')
+def delete_expense(request, id):
+    expense = get_object_or_404(Expence, id=id)
+    expense.delete()
+    return redirect('allexpense')
 
 @login_required(login_url='login')
 def allincome(request):
