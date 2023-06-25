@@ -113,7 +113,7 @@ def allexpence(request):
 def loginuser(request):
 
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('allincome')
 
     if request.method == "POST":
         username = request.POST.get("username")
