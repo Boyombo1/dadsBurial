@@ -7,8 +7,10 @@ from.forms import addIncomeForm, addExpenceForm
 from .utils import incomeLeft
 from django.db.models import Sum
 from django.contrib.auth.models import User
-#from djmoney.money import Money
+from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 from decimal import Decimal
+import locale
 
 # Create your views here.
 
@@ -85,6 +87,16 @@ def delete_expense(request, id):
     expense.delete()
     return redirect('allexpense')
 
+def get_currency_symbol(currency_code):
+    # Map currency codes to symbols
+    currency_symbols = {
+        'NGN': '₦',  # Nigerian Naira
+        # Add more currency codes and symbols as needed
+    }
+
+    # Return the symbol based on the currency code
+    return currency_symbols.get(currency_code, currency_code)
+
 @login_required(login_url='login')
 def allincome(request):
     search_query = ""
@@ -93,11 +105,26 @@ def allincome(request):
         search_query = request.GET.get("search_query")
 
     income_s = Income.objects.filter(owner__username__icontains=search_query)
-    #income = Income.objects.all()
-    income_sum = Income.objects.aggregate(total=Sum('amount')).get('total', Decimal('0.00'))
-    expense = Expence.objects.aggregate(total=Sum('amount')).get('total', Decimal('0.00'))
+    
+    income_sum = Income.objects.aggregate(total=Sum('amount')).get('total', Money(0, currency='NGN'))
+    expense = Expence.objects.aggregate(total=Sum('amount')).get('total', Money(0, currency='NGN'))
     balance = incomeLeft()
-    context = {"income_s": income_s, "income_sum":income_sum, "balance":balance, "expense":expense}
+    locale.setlocale(locale.LC_ALL, '')
+
+
+    locale.setlocale(locale.LC_ALL, '')
+
+    # Format the Money instances as currency strings
+    formatted_income_sum = locale.currency(income_sum, symbol=True)
+    formatted_expense = locale.currency(expense, symbol=True)
+    formatted_balance = locale.currency(balance, symbol=True)
+
+    context = {
+        "income_s": income_s,
+        "income_sum": formatted_income_sum,
+        "balance": formatted_balance,
+        "expense": formatted_expense
+    }
     return render(request, 'finance/income.html', context)
 
 @login_required(login_url='login')

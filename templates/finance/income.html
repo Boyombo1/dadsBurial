@@ -38,7 +38,7 @@ body {
                             
                                 <div class="flex-fill ms-0">
                                     <div class=""><i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                                        <b>Expence(₦)</b></div>
+                                        <b>Expense(₦)</b></div>
                                     <h5 class="mb-0 text-center">{{expense}}</h5>
                                 </div>
                                 
@@ -108,6 +108,7 @@ body {
                                            <th>Name</th>
                                             <th>Amount</th>
                                             <th>Date</th>
+                                            <th>Comment</th>
                                            </tr> 
                                             
                                         </thead
@@ -128,6 +129,7 @@ body {
                                             <td>{{income.owner}}</td>
                                             <td>{{income.amount}}</td>
                                             <td>{{income.date}}</td>
+                                            <td>{{income.comment}}</td>
                                             {% if perms.finance.can_add_income %}
                                             <td style="background:green"><a href="{% url 'edit-income' income.id %}"><b>Edit</b></a></td>
                                             <td style="background:red"><a href="{% url 'delete-income' income.id %}"><b>Delete</b></a></td>
