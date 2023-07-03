@@ -13,7 +13,7 @@ from decimal import Decimal
 # Create your views here.
 
 def home(request):
-    return render(request, "login.html")
+    return render(request, "cover.html")
 
 
 @login_required(login_url='login')
@@ -113,7 +113,7 @@ def allexpence(request):
 def loginuser(request):
 
     if request.user.is_authenticated:
-        return redirect('allincome')
+        return redirect('home')
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -130,7 +130,7 @@ def loginuser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('allexpense')
+            return redirect('home')
         else:
             messages.error(request, "username or password is incorrect")
             return redirect('login')
@@ -139,4 +139,4 @@ def loginuser(request):
 
 def logoutuser(request):
     logout(request)
-    return redirect('login')       
+    return redirect('home')       
